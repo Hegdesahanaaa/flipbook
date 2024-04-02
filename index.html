@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Flip Book</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS styles -->
+    <style>
+        /* Reset styles */
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: sans-serif;
+        }
+        /* Outer container styling */
+        .outer-container {
+            width: 80vw;
+            height: 65vh;
+            display: none;
+            background-color:black;
+            position: relative;
+            top: 18%;
+            left: 10%;
+            z-index: 9998;
+            border-radius: 1%;
+        }
+        /* Inner container styling */
+        .container {
+            position:relative;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            z-index: 9999; 
+            transition: transform 0.5s ease; 
+        }
+       /* Close button styling */
+        #closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: rgb(160, 145, 145); 
+            color: rgb(40, 25, 40);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 9999; 
+        }
+        /* Body and HTML styling */
+        body, html {
+            height: 100%;
+            margin: 0;
+            width: 100%;
+        }
+        /* Paragraph styling */
+        p {
+            margin-top: 10px;
+            font-size: 13px;
+            text-align: justify;
+        }
+        /* Book content styling */
+        .book-content {
+            width:40vw; 
+            height: 45vh; 
+            position: relative;
+            perspective: 1000px;
+            transition: 1s;
+        }
+        /* Book styling */
+        .book {
+            position: absolute;
+            width: 85%;
+            height: 100%;
+            transition: 1s;
+            transform-style: preserve-3d;
+            transform-origin: left;
+            margin-left: 3vw;
+            margin-top: 2vh;
+        }
+
+        
+        .book:not(:hover) .face-front {
+            transform: rotateY(0deg);
+        }
+
+        .book:not(:hover) .face-back {
+            transform: rotateY(180deg);
+        }
+
+        .face-front,
+        .face-back {
+            width: 100%;
+            height: 100%;
+            
+            background: rgb(213, 186, 204); 
+            color: rgb(23, 19, 19); 
+            padding: 15px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transform-style: preserve-3d; 
+            backface-visibility: hidden; 
+        }
+        /* Button styling */
+        #showFlipBook {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+             display: flex;
+        }
+        /* Front and back face styling */
+        .face-front {
+            box-shadow: inset 3px 0px 20px -7px black;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+            transform: rotateY(0deg); 
+        }
+
+        .face-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateZ(-1px) rotateY(180deg);
+            box-shadow: inset -3px 1px 20px -7px black;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        #portada {
+            background: url('../img/bookPortada.jpg');
+        }
+
+        #portada-back {
+            background: url('../img/portadaBack.jpg');
+        }
+
+        #portada,
+        #portada-back {
+            background-size: 100% 100%;
+        }
+
+    
+        @media screen and (max-width: 800px) {
+            p {
+                font-size: 12px;
+            }
+        }
+         /* list styling */
+        .cloud-list {
+        margin-left: 20px; 
+    }
+    .cloud-list > span {
+        display: block;
+    }
+    .cloud-list > span:not(:first-child) {
+        margin-left: 20px; 
+    }
+
+    </style>
+</head>
+
+<body>
+<!-- Button to show the flip book -->
+<button id="showFlipBook" onclick="toggleFlipBook()">Show Flip Book</button>
+
+<!-- Outer container for the flip book -->
+<div class="outer-container" id="outer-container">
+    <button id="closeButton">X</button>
+    <!-- Container for the flip book content -->
+    <div class="container" id="container">
+         <!-- Book content -->
+        <div class="book-content">
+           
+            <!-- First page of the book -->
+            <div class="book">
+                <div class="face-front" id="trsf">
+                    <h1>Data Engineering Practice Capabilities</h1>
+                    
+                  
+                    <img src="./collabera-logo-color.png" alt="Your Logo" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 150px; height: auto;">
+                </div>
+                <div class="face-back" >
+                    
+                    <h3>Empowering Data Innovation</h3><br>
+                    <h6>Harnessing the Power of Leading Technologies and Partnerships</h6><br>
+                    <p style="text-decoration-style: solid;">
+                        Cloud-&emsp;AWS , Azure ,GCP<br><br>
+                        Snowflake<br><br>
+                        Databricks – Spark, Lake house<br><br>
+                        Bigdata – Hadoop, Cloudera<br><br>
+                        Gen AI
+                    </p>
+                </div>
+            </div>
+
+            
+            <div class="book">
+                <div class="face-front" style="background-color:  rgb(213, 186, 204);">
+                    <img src="./ai.jpg" alt="Image" style="width: 98%; height: 75%; object-fit: cover;object-fit: contain">
+                    <p style="text-align: right; font-weight: bold; color: black;margin-top: 25px;">Want to explore more??</p>
+                </div>
+                <div class="face-back" style="background-color: white; color: black;">
+                    <p>Generative AI for the enterprise built on data you can trust.</p>
+                    <img src="./iii.png" alt="Image" style="width: 100%; height: 85%; object-fit: cover;object-fit: contain">
+                </div>
+            </div>
+
+            <div class="book">
+                <div class="face-front" style="background-color: white; color: black;">
+                    
+                    <img src="./ooo.png" alt="Image" style="width: 100%; height: 85%; object-fit: cover;object-fit: contain">
+                </div>
+                <div class="face-back"style="background-color: white; color: black;">
+                    <img src="./bigd.png" alt="Image" style="width: 100%; height: 100%; object-fit: cover;object-fit: contain">
+                </div>
+            </div>
+    
+            <div class="book">
+                <div class="face-front" style="background-color: white;">
+                    <img src="./dataToai.png" alt="Image" style="width: 100%; height: 85%; object-fit: cover;object-fit: contain">
+                </div>
+                <div class="face-back" style="background-color: white; color: black;">
+                    <img src="./aws.png" alt="Image" style="width: 100%; height: 100%; object-fit: cover;object-fit: contain">
+                </div>
+            </div>
+    
+            <div class="book">
+                <div class="face-front" style="background-color: white;">
+                    <img src="./snow.png" alt="Image" style="width: 100%; height: 85%; object-fit: cover;object-fit: contain">
+                </div>
+                <div class="face-back" style="background-color: white; color: black;">
+                    <img src="./snow2.png" alt="Image" style="width: 100%; height: 100%; object-fit: cover;object-fit: contain">
+                </div>
+            </div>
+            <div class="book">
+                <div class="face-front" style="background-color: white;">
+                    <img src="./snow3.png" alt="Image" style="width: 100%; height: 85%; object-fit: cover;object-fit: contain">
+                </div>
+                <div class="face-back" style="background-color: white; color: black;">
+                    <img src="./bigAI.png" alt="Image" style="width: 100%; height: 100%; object-fit: cover;object-fit: contain">
+                </div>
+            </div>
+            <div class="book">
+                <div class="face-front" style="background-color: white;">
+                    <img src="./snow5.png" alt="Image" style="width: 100%; height: 85%; object-fit: cover;object-fit: contain">
+                </div>
+                <div class="face-back" style="background-color: white; color: black;">
+                    <img src="./conn.png" alt="Image" style="width: 100%; height: 100%; object-fit: cover;object-fit: contain">
+                </div>
+            </div>
+            <div class="book">
+                <div class="face-front" style="background-color: white;">
+                    <img src="./dw.png" alt="Image" style="width: 100%; height: 85%; object-fit: cover;object-fit: contain">
+                </div>
+                <div class="face-back" style="background-color: white; color: black;">
+                    <img src="./snow7.png" alt="Image" style="width: 100%; height: 100%; object-fit: cover;object-fit: contain">
+                </div>
+            </div>
+            <div class="book">
+                <div class="face-front" style="background-color: white;">
+                    <img src="./aiii.png" alt="Image" style="width: 100%; height: 85%; object-fit: cover;">
+                </div>
+                <div class="face-back" style="background-color: white; color: black; object-fit: contain;">
+                    <img src="./snow8.png" alt="Image" style="width: 100%; height: 100%; object-fit: cover;object-fit: contain">
+                </div>
+            
+
+        </div>
+        <!-- Last page of the book -->
+        <div class="book">
+            <div class="face-front" id="trsf">
+               
+                
+                <img src="./collabera-logo-color.png" alt="Your Logo" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 150px; height: auto;">
+               
+            </div>
+            <div class="face-back" >
+                <img src="./collabera-logo-color.png" alt="Your Logo" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); width: 150px; height: auto;">
+              
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- JavaScript for toggling the flip book and page flipping -->
+<script>
+  // Function to toggle the flip book visibility
+function toggleFlipBook() {
+    var flipBookContainer = document.getElementById('container');
+    var outerContainer = document.getElementById('outer-container');
+    
+    // Show flip book and outer container
+    flipBookContainer.style.display = 'block';
+    outerContainer.style.display = 'flex';
+     // Adjust width of outer container
+    var totalWidth = document.querySelector('.outer-container').offsetWidth;
+
+    
+    outerContainer.style.width = totalWidth + 'px';
+    // Fade in animation for outer container
+    setTimeout(() => {
+     
+        outerContainer.style.opacity = '1';
+    }, 100);
+}
+
+// Event listener for showing the flip book
+document.getElementById('showFlipBook').addEventListener('click', toggleFlipBook);
+// Event listener for closing the flip book
+document.getElementById('closeButton').addEventListener('click', function() {
+    var flipBookContainer = document.getElementById('container');
+    var outerContainer = document.getElementById('outer-container');
+    var books = document.querySelectorAll('.book');
+  
+
+    // Hide flip book and outer container
+    flipBookContainer.style.display = 'none';
+    outerContainer.style.display = 'none';
+});
+// Array to store book elements
+var uno = document.querySelectorAll('.book');
+var contZindex = 2;
+var customZindex = 1;
+// Event listener for clicking on book pages
+uno.forEach(function (book, index) {
+    book.style.zIndex = customZindex;
+    customZindex--;
+
+    book.addEventListener('click', function (e) {
+        playPageFlipSound();
+        var tgt = e.target;
+        var unoThis = this;
+        // Change z-index of clicked book
+        unoThis.style.zIndex = contZindex;
+        contZindex++;
+        // Flip page if front or back face is clicked
+        if (tgt.classList.contains('face-front') && !tgt.id.includes('page')) {
+            unoThis.style.zIndex = contZindex;
+            contZindex += 20;
+            setTimeout(function () {
+                unoThis.style.transform = 'rotateY(-180deg)';
+                if (unoThis === uno[0]) { // Check if the first page is clicked
+                    document.querySelector('.container').style.transform = 'translate(-10%, -50%)'; // Move the container to the right
+                }
+            }, 500);
+        } else if (tgt.classList.contains('face-back')) {
+            unoThis.style.zIndex = contZindex;
+            contZindex += 20;
+
+            setTimeout(function () {
+                unoThis.style.transform = 'rotateY(0deg)';
+                if (unoThis === uno[0]) { 
+                    document.querySelector('.container').style.transform = 'translate(-50%, -50%)'; 
+                }
+            }, 500);
+        }
+        // Move container to the left if last page is clicked
+        if (index === uno[length-1]) {
+            setTimeout(function () {
+                document.querySelector('.container').style.transform = 'translate(-10%, -50%)'; // Move the container to the left
+            }, 200);
+        }
+    });
+});
+// Function to play page flip sound
+function playPageFlipSound() {
+    var pageFlipSound = document.getElementById('pageFlipSound');
+    pageFlipSound.play();
+}
+  
+</script>
+<!-- Audio element for page flip sound -->
+<audio id="pageFlipSound" preload="auto">
+    <source src="./page-flip-01a.mp3" type="audio/mpeg" />
+   
+</audio>
+
+</body>
+</html>
+
